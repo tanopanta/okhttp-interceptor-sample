@@ -9,23 +9,22 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MyInterceptor implements Interceptor {
+public class UserAgentInterceptor implements Interceptor {
+    private static String appVersion;
+    public UserAgentInterceptor() {
+        Config conf = ConfigFactory.load();
+        appVersion = conf.getString("app.version");
+    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        String appVersion = appVersion();
         Request withHeaderRequest = request.newBuilder()
-            .addHeader("User-Agent", appVersion)
+            .addHeader("User-Agent", "myapp/" + appVersion)
             .build();
 
         Response response = chain.proceed(withHeaderRequest);
         return response;
-    }
-
-    public String appVersion() {
-        Config conf = ConfigFactory.load();
-        return conf.getString("app.version");
     }
 }

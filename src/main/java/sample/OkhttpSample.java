@@ -9,7 +9,7 @@ import okhttp3.Response;
 public class OkhttpSample {
     public static void main(String[] args) {
         OkHttpClient client = new OkHttpClient.Builder()
-            .addInterceptor(new MyInterceptor())
+            .addInterceptor(new UserAgentInterceptor())
             .build();
         Request request = new Request.Builder()
             .url("https://httpbin.org/get")
