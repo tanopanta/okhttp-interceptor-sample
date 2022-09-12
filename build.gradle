@@ -1,3 +1,7 @@
+plugins {
+    id 'com.palantir.git-version' version '0.15.0'
+}
+
 apply plugin: 'application'
 
 mainClassName = 'sample.OkhttpSample'
@@ -8,4 +12,9 @@ repositories {
 
 dependencies {
     implementation('com.squareup.okhttp3:okhttp:4.10.0')
+    implementation('com.typesafe:config:1.4.2')
+}
+
+run {
+    systemProperties['app.version'] = gitVersion()
 }
